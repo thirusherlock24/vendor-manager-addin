@@ -22,6 +22,7 @@ module.exports = async (env, options) => {
       commands: "./src/commands/commands.ts",
     },
     output: {
+      path: __dirname + '/dist', 
       clean: true,
     },
     resolve: {
