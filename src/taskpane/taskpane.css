@@ -5,7 +5,9 @@
 
  html,
  body {
-     margin: 20px;
+     margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 20px;
      padding: 0;
  }
  
@@ -13,7 +15,9 @@
      margin: 0;
      padding: 0;
  }
- 
+ .vendorButton{
+    margin-top: 10px;
+}
  .ms-welcome__header {
     padding: 20px;
     padding-bottom: 30px;
@@ -89,9 +93,7 @@ b {
     button, input, label {
       font-size: 1.4em;
     }
-    .vendorButton{
-        margin-top: 10px;
-    }
+   
     .generateReport{
         margin-left:4px;
     }
