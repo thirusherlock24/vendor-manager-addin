@@ -81,14 +81,15 @@ b {
 
 @media (min-width: 600px) and (max-width: 1024px) {
     body {
-      font-size: 18px;
+      font-size: 22px;
+      margin-right: 0px;
     }
   
     h1, h2, h3 {
-      font-size: 1.5em;
+      font-size: 1.8em;
     }
   
     button, input, label {
-      font-size: 1.2em;
+      font-size: 1.4em;
     }
   }
