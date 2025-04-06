@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 </head>
-<body style="margin-left: 40px;">
+<body style="margin-left: 25px;">
   <h3>Vendor Manager - Finance Portal</h3>
 
   <section id="homePage">
@@ -24,14 +24,14 @@
       <option value="weekly">Weekly</option>
       <option value="alt-weekly">Alt-Weekly</option>
     </select>
-    <div id="scheduleDetails" style="display: none;">
+    <div id="scheduleDetails" style="display: none; margin-top: 10px;">
       <input id="vendorAmount" placeholder="Payment Amount" type="number" />
       <select id="vendorScheduleAccount">
         <option value="acc1">Account 1</option>
         <option value="acc2">Account 2</option>
       </select>
     </div>
-    <button id="addVendorBtn">Add Vendor</button>
+    <button id="addVendorBtn" style="margin-top: 10px;">Add Vendor</button>
   </br>
   <div id="addVendorNotification" style="
   display: none;
@@ -64,16 +64,17 @@
         <option value="weekly">Weekly</option>
         <option value="alt-weekly">Alt-Weekly</option>
       </select>
-      <div id="editScheduleDetails" style="display: none;">
+      <div id="editScheduleDetails" style="display: none; margin-top: 10px;">
         <input id="editVendorAmount" placeholder="Payment Amount" type="number" />
         <select id="editVendorScheduleAccount">
           <option value="acc1">Account 1</option>
           <option value="acc2">Account 2</option>
         </select>
       </div>
+      <div style="margin-top: 10px;">
       <button id="saveEditedVendorBtn">Save</button>
       <button id="cancelEditVendorBtn">Cancel</button>
-      
+    </div>
     </div>
     <div id="editVendorNotification" style="
       display: none;
@@ -126,7 +127,7 @@
     <select id="reportVendorSelect" style="display:none;"></select>
     <select id="reportAccountSelect" style="display:none;"></select>
 
-    <button id="generateReportBtn">Generate Report</button>
+    <button id="generateReportBtn" style="margin-top: 10px;">Generate Report</button>
     <ul id="reportOutput"></ul>
   </section>
 </body>
