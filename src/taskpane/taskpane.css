@@ -89,4 +89,10 @@ b {
     button, input, label {
       font-size: 1.4em;
     }
+    .vendorButton{
+        margin-top: 10px;
+    }
+    .generateReport{
+        margin-left:4px;
+    }
   }

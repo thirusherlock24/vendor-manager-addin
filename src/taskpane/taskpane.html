@@ -42,8 +42,8 @@
 </div>
   </div>
 
-    <button onclick="showSection('viewSection')">Edit/Delete Vendor</button>
-    <button id="exportVendorsBtn">Export Vendors to Excel</button>
+    <button class="vendorButton" onclick="showSection('viewSection')">Edit/Delete Vendor</button>
+    <button class="vendorButton" id="exportVendorsBtn">Export Vendors to Excel</button>
   </section>
 
   <section id="viewSection" style="display: none;">
@@ -128,7 +128,7 @@
     <select id="reportVendorSelect" style="display:none;"></select>
     <select id="reportAccountSelect" style="display:none;"></select>
 
-    <button id="generateReportBtn" style="margin-top: 10px;">Generate Report</button>
+    <button id="generateReportBtn" class="generateReport" style="margin-top: 10px;">Generate Report</button>
     <ul id="reportOutput"></ul>
   </section>
 </body>
