@@ -8,11 +8,29 @@
 </head>
 <body>
   <h3>Vendor Manager - Finance Portal</h3>
-
+  <div id="auth-section">
+    <div id="login-form">
+      <input class="authInput" type="text" id="usernameInput" placeholder="Username" />
+      <input class="authInput" type="password" id="passwordInput" placeholder="Password" />
+      <button class="authButton" id="loginBtn">Login</button>
+      <div id="loginNotification" style="
+  display: none;
+  padding: 3px;
+  color: #f81616;
+">
+</div>
+    </div>
+  
+    <div id="logout-form" style="display: none;">
+      <button class="authLogoutButton" id="logoutBtn">Logout</button>
+    </div>
+  </div>
+  
+  <div id="main-ui" style="display: none;">
   <section id="homePage">
-    <button onclick="showSection('vendorSection')" style="display: block; margin-bottom: 10px; width: 150px; text-align: center;">Manage Vendors</button>
-    <button onclick="showSection('paymentSection')" style="display: block; margin-bottom: 10px; width: 150px; text-align: center;">On-Demand Payments</button>
-    <button onclick="showSection('reportSection')" style="display: block; width: 150px; text-align: center;">Generate Reports</button>
+    <button onclick="showSection('vendorSection')" >Manage Vendors</button>
+    <button onclick="showSection('paymentSection')" >On-Demand Payments</button>
+    <button onclick="showSection('reportSection')" >Generate Reports</button>
   </section>
 
   <section id="vendorSection" style="display: none;">
@@ -131,5 +149,7 @@
     <button id="generateReportBtn" class="generateReport" style="margin-top: 10px;">Generate Report</button>
     <ul id="reportOutput"></ul>
   </section>
+</div>
+
 </body>
 </html>
