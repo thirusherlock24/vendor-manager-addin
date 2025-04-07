@@ -1,155 +1,137 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Vendor Manager Add-in</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" href="./taskpane.css" />
-  <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-</head>
-<body>
-  <h3>Vendor Manager - Finance Portal</h3>
-  <div id="auth-section">
-    <div id="login-form">
-      <input class="authInput" type="text" id="usernameInput" placeholder="Username" />
-      <input class="authInput" type="password" id="passwordInput" placeholder="Password" />
-      <button class="authButton" id="loginBtn">Login</button>
-      <div id="loginNotification" style="
-  display: none;
-  padding: 3px;
-  color: #f81616;
-">
-</div>
-    </div>
-  
-    <div id="logout-form" style="display: none;">
-      <button class="authLogoutButton" id="logoutBtn">Logout</button>
-    </div>
-  </div>
-  
-  <div id="main-ui" style="display: none;">
-  <section id="homePage">
-    <button onclick="showSection('vendorSection')" >Manage Vendors</button>
-    <button onclick="showSection('paymentSection')" >On-Demand Payments</button>
-    <button onclick="showSection('reportSection')" >Generate Reports</button>
-  </section>
-
-  <section id="vendorSection" style="display: none;">
-    <button onclick="showSection('homePage')"> Back</button>
-    <div style="margin-bottom: 10px;">
-    <h4>Add Vendor</h4>
-    <input id="vendorName" placeholder="Vendor Name" />
-    <select id="vendorType">
-      <option value="on-demand">On-Demand</option>
-      <option value="weekly">Weekly</option>
-      <option value="alt-weekly">Alt-Weekly</option>
-    </select>
-    <div id="scheduleDetails" style="display: none; margin-top: 10px;">
-      <input id="vendorAmount" placeholder="Payment Amount" type="number" />
-      <select id="vendorScheduleAccount">
-        <option value="acc1">Account 1</option>
-        <option value="acc2">Account 2</option>
-      </select>
-    </div>
-    <button id="addVendorBtn" style="margin-top: 10px;">Add Vendor</button>
-  </br>
-  <div id="addVendorNotification" style="
-  display: none;
-  padding: 3px;
-  color: #006633;
-">
-</div>
-  </div>
-
-    <button class="vendorButton" onclick="showSection('viewSection')">Edit/Delete Vendor</button>
-    <button class="vendorButton" id="exportVendorsBtn">Export Vendors to Excel</button>
-  </section>
-
-  <section id="viewSection" style="display: none;">
-    <button onclick="showSection('vendorSection')">Back</button>
-    <h3>Vendor Management</h3>
-  
-    <label for="vendorList">Select Vendor:</label>
-    <select id="vendorList"></select>
-    <br/><br/>
-  
-    <button id="editVendorBtn">Edit Vendor</button>
-    <button id="deleteVendorBtn">Delete Vendor</button>
-  
-    <div id="editVendorForm" style="margin-top: 20px; display: none;">
-      <h4>Edit Vendor</h4>
-      <input type="text" id="editVendorName" placeholder="Vendor Name" />
-      <select id="editVendorType">
-        <option value="on-demand">On-Demand</option>
-        <option value="weekly">Weekly</option>
-        <option value="alt-weekly">Alt-Weekly</option>
-      </select>
-      <div id="editScheduleDetails" style="display: none; margin-top: 10px;">
-        <input id="editVendorAmount" placeholder="Payment Amount" type="number" />
-        <select id="editVendorScheduleAccount">
-          <option value="acc1">Account 1</option>
-          <option value="acc2">Account 2</option>
-        </select>
+  <head>
+    <title>Vendor Manager Add-in</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./taskpane.css" />
+    <script
+      type="text/javascript"
+      src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"
+    ></script>
+  </head>
+  <body>
+    <h3>Vendor Manager - Finance Portal</h3>
+    <div id="auth-section">
+      <div id="login-form">
+        <input class="authInput" type="text" id="usernameInput" placeholder="Username" />
+        <input class="authInput" type="password" id="passwordInput" placeholder="Password" />
+        <button class="authButton" id="loginBtn">Login</button>
+        <div id="loginNotification" aria-live="polite"></div>
       </div>
-      <div style="margin-top: 10px;">
-      <button id="saveEditedVendorBtn">Save</button>
-      <button id="cancelEditVendorBtn">Cancel</button>
+
+      <div id="logout-form">
+        <button class="authLogoutButton" id="logoutBtn">Logout</button>
+      </div>
     </div>
+
+    <div id="main-ui">
+      <section id="homePage">
+        <button onclick="showSection('vendorSection')">Manage Vendors</button>
+        <button onclick="showSection('paymentSection')">On-Demand Payments</button>
+        <button onclick="showSection('reportSection')">Generate Reports</button>
+      </section>
+
+      <section id="vendorSection">
+        <button onclick="showSection('homePage')">Back</button>
+        <h4>Add Vendor</h4>
+        <div>
+          <input id="vendorName" placeholder="Vendor Name" />
+          <select id="vendorType">
+            <option value="on-demand">On-Demand</option>
+            <option value="weekly">Weekly</option>
+            <option value="alt-weekly">Alt-Weekly</option>
+          </select>
+        </div>
+        <div id="scheduleDetails">
+          <input id="vendorAmount" placeholder="Payment Amount" type="number" />
+          <select id="vendorScheduleAccount">
+            <option value="acc1">Account 1</option>
+            <option value="acc2">Account 2</option>
+          </select>
+        </div>
+        <button id="addVendorBtn">Add Vendor</button>
+
+        <div id="addVendorNotification" aria-live="polite"></div>
+        <div>
+          <button class="vendorButton" onclick="showSection('viewSection')">
+            Edit/Delete Vendor
+          </button>
+          <button class="vendorButton" id="exportVendorsBtn">Export Vendors to Excel</button>
+        </div>
+      </section>
+
+      <section id="viewSection">
+        <button onclick="showSection('vendorSection')">Back</button>
+        <h3>Vendor Management</h3>
+        <div>
+          <label for="vendorList">Select Vendor:</label>
+          <select id="vendorList"></select>
+        </div>
+        <div>
+          <button id="editVendorBtn">Edit Vendor</button>
+          <button id="deleteVendorBtn">Delete Vendor</button>
+        </div>
+        <div id="editVendorForm">
+          <h4>Edit Vendor</h4>
+          <input type="text" id="editVendorName" placeholder="Vendor Name" />
+          <select id="editVendorType">
+            <option value="on-demand">On-Demand</option>
+            <option value="weekly">Weekly</option>
+            <option value="alt-weekly">Alt-Weekly</option>
+          </select>
+          <div id="editScheduleDetails">
+            <input id="editVendorAmount" placeholder="Payment Amount" type="number" />
+            <select id="editVendorScheduleAccount">
+              <option value="acc1">Account 1</option>
+              <option value="acc2">Account 2</option>
+            </select>
+          </div>
+          <div id="saveBtn">
+            <button id="saveEditedVendorBtn">Save</button>
+            <button id="cancelEditVendorBtn">Cancel</button>
+          </div>
+        </div>
+        <div id="editVendorNotification" aria-live="polite"></div>
+      </section>
+
+      <section id="paymentSection">
+        <button onclick="showSection('homePage')">Back</button>
+        <h4>On-Demand Payment</h4>
+        <div class="paymentStyle">
+          <label for="vendorSelect">Vendor:</label>
+          <select id="vendorSelect"></select>
+        </div>
+        <div class="paymentStyle">
+          <label for="paymentAmount">Amount:</label>
+          <input id="paymentAmount" type="number" placeholder="100" />
+        </div>
+        <div class="paymentStyle">
+          <label for="accountSelect">From Account:</label>
+          <select id="accountSelect"></select>
+        </div>
+        <button id="payBtn">Pay Vendor</button>
+        <div id="paymentNotification" aria-live="polite"></div>
+      </section>
+
+      <section id="reportSection">
+        <button onclick="showSection('homePage')">Back</button>
+        <h3>Generate Reports</h3>
+
+        <label for="reportType">Select Report Type:</label>
+        <select id="reportType">
+          <option value="all">All Transactions</option>
+          <option value="vendor">By Vendor</option>
+          <option value="account">By Account</option>
+          <option value="onDemand">On-demand</option>
+          <option value="scheduled">Scheduled</option>
+        </select>
+
+        <select id="reportVendorSelect"></select>
+        <select id="reportAccountSelect"></select>
+
+        <button id="generateReportBtn" class="generateReport">Generate Report</button>
+        <ul id="reportOutput"></ul>
+      </section>
     </div>
-    <div id="editVendorNotification" style="
-      display: none;
-      padding: 3px;
-      color: #006633;
-    ">
-    </div>
-  </section>
-
-  <section id="paymentSection" style="display: none;">
-    <button onclick="showSection('homePage')"> Back</button>
-    <h4>On-Demand Payment</h4>
-    <div style="display: block; margin-bottom: 10px;">
-    <label for="vendorSelect">Vendor:</label>
-    <select id="vendorSelect"></select>
-  </div>
-  <div style="display: block; margin-bottom: 10px;">
-
-    <label for="paymentAmount">Amount:</label>
-    <input id="paymentAmount" type="number" placeholder="100" />
-  </div>
-  <div style="display: block; margin-bottom: 10px;">
-
-    <label for="accountSelect">From Account:</label>
-    <select id="accountSelect"></select>
-</div>
-    <button id="payBtn">Pay Vendor</button>
-  </br>
-    <div id="paymentNotification" style="
-    display: none;
-    padding: 3px;
-    color: #006633;
-  ">
-  </div>
-  </section>
-
-  <section id="reportSection" style="display: none;">
-    <button onclick="showSection('homePage')">Back</button>
-    <h3>Generate Reports</h3>
-
-    <label for="reportType">Select Report Type:</label>
-    <select id="reportType">
-      <option value="all">All Transactions</option>
-      <option value="vendor">By Vendor</option>
-      <option value="account">By Account</option>
-      <option value="onDemand">On-demand</option>
-      <option value="scheduled">Scheduled</option>
-    </select>
-
-    <select id="reportVendorSelect" style="display:none;"></select>
-    <select id="reportAccountSelect" style="display:none;"></select>
-
-    <button id="generateReportBtn" class="generateReport" style="margin-top: 10px;">Generate Report</button>
-    <ul id="reportOutput"></ul>
-  </section>
-</div>
-
-</body>
+  </body>
 </html>
