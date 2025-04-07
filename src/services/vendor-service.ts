@@ -51,18 +51,27 @@ export function exportVendorsToExcel() {
     const sheet = context.workbook.worksheets.getActiveWorksheet();
     const usedRange = sheet.getUsedRange();
     usedRange.clear();
-    const data = [["ID", "Name", "Type", "Scheduled Amount", "Scheduled AccountID", "Last PayDay"], 
-      ...vendors.map(v => [
-      v.id, 
-      v.name, 
-      v.type, 
-      v.scheduleAmount ?? "N/A", 
-      v.scheduleAccountId ?? "N/A", 
-      v.lastPaidDay ?? "N/A"
-      ])
-    ];
+    const timestamp = new Date().toLocaleString();
+
+const header = ["ID", "Name", "Type", "Scheduled Amount", "Scheduled AccountID", "Last PayDay"];
+const rows = vendors.map(v => [
+  v.id, 
+  v.name, 
+  v.type, 
+  v.scheduleAmount ?? "N/A", 
+  v.scheduleAccountId ?? "N/A", 
+  v.lastPaidDay ?? "N/A"
+]);
+const footer = [
+  ["", "", "", "", "", ""], 
+  [`Report generated at: ${timestamp}`, "", "", "", "", ""]
+];
+
+const data: (string | number)[][] = [header, ...rows, ...footer];
     const range = sheet.getRange(`A1:F${data.length}`);
     range.values = data;
+    sheet.getRange("A1:F1").format.font.bold = true;
+
     await context.sync();
   });
 }

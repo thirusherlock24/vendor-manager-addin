@@ -6,12 +6,9 @@ import { showNotification } from "../utils/notification";
 import { populateDropdowns } from "../services/populate-dropdowns";
 import { setupEditDeleteHandlers } from "../edit_delete/edit-delete-handlers";
 import { exportTransactionsToExcel } from "../services/export-tansactions";
+import { exportAccountsToExcel } from "../services/export-accounts";
 
-function initialAmount(){
-    const amountInput = document.getElementById("paymentAmount") as HTMLInputElement;
-    amountInput.value = "100";
-  
-  }
+
   
 export function setupEventHandlers() {
     try {
@@ -27,7 +24,6 @@ export function setupEventHandlers() {
   
     setupEditDeleteHandlers();
   
-    initialAmount();;
     (document.getElementById("vendorType") as HTMLSelectElement)?.addEventListener("change", e => {
       const val = (e.target as HTMLSelectElement).value;
       document.getElementById("scheduleDetails")!.style.display = val === "on-demand" ? "none" : "block";
@@ -40,11 +36,11 @@ export function setupEventHandlers() {
       try {
         const name = (document.getElementById("vendorName") as HTMLInputElement).value.trim();
         const type = (document.getElementById("vendorType") as HTMLSelectElement).value;
-        const amount = parseFloat((document.getElementById("vendorAmount") as HTMLInputElement).value || "100");
+        const amount = parseFloat((document.getElementById("vendorAmount") as HTMLInputElement).value );
         const accountId = (document.getElementById("vendorScheduleAccount") as HTMLSelectElement).value;
     
         if (!name) return showNotification("addVendorNotification", "Vendor name is required!");
-    
+        if (amount <1) return showNotification("addVendorNotification", "Amount must be greater than zero!");
         if (type === "on-demand") {
           addVendor(name, type as any);
         } else {
@@ -69,13 +65,21 @@ export function setupEventHandlers() {
     document.getElementById("payBtn")?.addEventListener("click", () => {
       try {
         const vendorId = (document.getElementById("vendorSelect") as HTMLSelectElement).value;
-        const amount = parseFloat((document.getElementById("paymentAmount") as HTMLInputElement).value) || 100;
+        const amount = parseFloat((document.getElementById("paymentAmount") as HTMLInputElement).value);
         const accountId = (document.getElementById("accountSelect") as HTMLSelectElement).value;
+        if (!vendorId) {
+          showNotification("paymentNotification", "Please select a vendor.");
+          return;
+        }
+      
+        if (amount <1) {
+          showNotification("paymentNotification", "Amount must be greater than zero.");
+          return;
+        }
         console.log(`Proceeding with payment: $${amount} to vendor ${vendorId}`);
   
         const success = performPayment(vendorId, amount, accountId);
         success ?       showNotification("paymentNotification","Payment successful!"): showNotification("paymentNotification","Insufficient balance.");
-        initialAmount();
       } catch (err) {
         console.error("Error during payment:", err);
         console.log("Error processing payment.");
@@ -98,8 +102,12 @@ export function setupEventHandlers() {
   
         if (type === "all") txns = getAllTransactions();
         else if (type === "vendor") {
-          const vid = (document.getElementById("reportVendorSelect") as HTMLSelectElement).value;
-          txns = getVendorTransactions(vid);
+            const vid = (document.getElementById("reportVendorSelect") as HTMLSelectElement).value;
+            if (!vid) {
+            showNotification("reportNotification", "Add a vendor first.");
+            return;
+            }
+            txns = getVendorTransactions(vid);
         } else if (type === "account") {
           const aid = (document.getElementById("reportAccountSelect") as HTMLSelectElement).value;
           txns = getAccountTransactions(aid);
@@ -109,6 +117,11 @@ export function setupEventHandlers() {
         }
         else if (type === "scheduled") {
           txns = getScheduledTransactions();
+        }
+        else if (type === "balance")
+        {
+          exportAccountsToExcel();
+          return;
         }
   
         txns.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());

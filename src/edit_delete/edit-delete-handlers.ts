@@ -53,11 +53,11 @@ export function setupEditDeleteHandlers() {
     const id = nameInput.dataset.editingId;
     const name = nameInput.value.trim();
     const type = typeSelect.value;
-    const amount = parseFloat(amountInput.value || "100");
+    const amount = parseFloat(amountInput.value);
     const accountId = accountSelect.value || "acc1";
   
     if (!id || !name) return showNotification("editVendorNotification", "Vendor name required!");
-  
+    if (amount < 1) return showNotification("editVendorNotification", "Amount must be greater than zero!");
     if (type === "on-demand") {
       editVendor(id, name, type as any);
     } else {

@@ -1,5 +1,5 @@
 import { getAccounts } from "../data/local-storage-provider";
-import { Transaction } from "../models/models";
+import { Transaction ,Account} from "../models/models";
 
 export function getAllTransactions(): Transaction[] {
   return getAccounts().flatMap(a => a.transactions);
@@ -19,4 +19,13 @@ export function getScheduledTransactions(): Transaction[] {
 export function getAccountTransactions(accountId: string): Transaction[] {
   const acc = getAccounts().find(a => a.id === accountId);
   return acc ? acc.transactions : [];
+}
+
+export function getAccountDetails(): Omit<Account, "transactions">[] {
+  const accounts = getAccounts(); 
+  return accounts.map(({ id, name, balance }) => ({
+    id,
+    name,
+    balance
+  }));
 }

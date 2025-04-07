@@ -124,13 +124,14 @@
           <option value="account">By Account</option>
           <option value="onDemand">On-demand</option>
           <option value="scheduled">Scheduled</option>
+          <option value="balance">Balance</option>
         </select>
 
         <select id="reportVendorSelect"></select>
         <select id="reportAccountSelect"></select>
 
         <button id="generateReportBtn" class="generateReport">Generate Report</button>
-        <ul id="reportOutput"></ul>
+        <div id="reportNotification" aria-live="polite"></div>
       </section>
     </div>
   </body>

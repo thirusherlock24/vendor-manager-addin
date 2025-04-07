@@ -34,10 +34,12 @@ b {
 
 #addVendorNotification,
 #editVendorNotification,
-#paymentNotification {
+#paymentNotification,
+#reportNotification
+ {
   display: none;
   padding: 3px;
-  color: #006633;
+  color: #030303;
 }
 
 #logout-form {
