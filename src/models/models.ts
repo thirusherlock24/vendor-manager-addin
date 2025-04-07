@@ -4,7 +4,8 @@ export interface Vendor {
   type: "weekly" | "alt-weekly" | "on-demand";
   scheduleAmount?: number;
   scheduleAccountId?: string;
-  lastPaidDay?: number; 
+  lastPaidDay?: number | string;
+  skip?:number;
 }
 
 export interface Transaction {

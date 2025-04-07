@@ -24,31 +24,39 @@ export function setupEventHandlers() {
   
     setupEditDeleteHandlers();
   
-    (document.getElementById("vendorType") as HTMLSelectElement)?.addEventListener("change", e => {
-      const val = (e.target as HTMLSelectElement).value;
-      document.getElementById("scheduleDetails")!.style.display = val === "on-demand" ? "none" : "block";
-    });
+    
     document.getElementById("vendorType")?.addEventListener("change", e => {
       const value = (e.target as HTMLSelectElement).value;
       document.getElementById("scheduleDetails")!.style.display = value === "on-demand" ? "none" : "block";
     });
     document.getElementById("addVendorBtn")?.addEventListener("click", () => {
       try {
-        const name = (document.getElementById("vendorName") as HTMLInputElement).value.trim();
-        const type = (document.getElementById("vendorType") as HTMLSelectElement).value;
-        const amount = parseFloat((document.getElementById("vendorAmount") as HTMLInputElement).value );
-        const accountId = (document.getElementById("vendorScheduleAccount") as HTMLSelectElement).value;
-    
+        const nameInput = document.getElementById("vendorName") as HTMLInputElement;
+        const typeSelect = document.getElementById("vendorType") as HTMLSelectElement;
+        const amountInput = document.getElementById("vendorAmount") as HTMLInputElement;
+        const accountSelect = document.getElementById("vendorScheduleAccount") as HTMLSelectElement;
+      
+        const name = nameInput.value.trim();
+        const type = typeSelect.value;
+        const amount = parseFloat(amountInput.value);
+        const accountId = accountSelect.value;
+      
         if (!name) return showNotification("addVendorNotification", "Vendor name is required!");
-        if (amount <1) return showNotification("addVendorNotification", "Amount must be greater than zero!");
+        if (type !== "on-demand" && (isNaN(amount) || amount <= 0)) {
+          return showNotification("addVendorNotification", "Amount must be greater than zero!");
+        }      
         if (type === "on-demand") {
           addVendor(name, type as any);
         } else {
           addVendor(name, type as any, amount, accountId);
         }
-    
+      
         populateDropdowns();
         showNotification("addVendorNotification", "Vendor added successfully!");
+      
+        nameInput.value = "";
+        amountInput.value = "";
+      
       } catch (err) {
         console.error("Error adding vendor:", err);
       }
@@ -65,6 +73,8 @@ export function setupEventHandlers() {
     document.getElementById("payBtn")?.addEventListener("click", () => {
       try {
         const vendorId = (document.getElementById("vendorSelect") as HTMLSelectElement).value;
+        const amountInput = document.getElementById("paymentAmount") as HTMLInputElement;
+
         const amount = parseFloat((document.getElementById("paymentAmount") as HTMLInputElement).value);
         const accountId = (document.getElementById("accountSelect") as HTMLSelectElement).value;
         if (!vendorId) {
@@ -72,15 +82,19 @@ export function setupEventHandlers() {
           return;
         }
       
-        if (amount <1) {
+        if ((isNaN(amount) || amount <= 0)) {
           showNotification("paymentNotification", "Amount must be greater than zero.");
           return;
         }
         console.log(`Proceeding with payment: $${amount} to vendor ${vendorId}`);
   
         const success = performPayment(vendorId, amount, accountId);
-        success ?       showNotification("paymentNotification","Payment successful!"): showNotification("paymentNotification","Insufficient balance.");
-      } catch (err) {
+        if (success) {
+          showNotification("paymentNotification", "Payment successful!");
+          amountInput.value = ""; 
+        } else {
+          showNotification("paymentNotification", "Insufficient balance.");
+        }      } catch (err) {
         console.error("Error during payment:", err);
         console.log("Error processing payment.");
       }
@@ -104,7 +118,7 @@ export function setupEventHandlers() {
         else if (type === "vendor") {
             const vid = (document.getElementById("reportVendorSelect") as HTMLSelectElement).value;
             if (!vid) {
-            showNotification("reportNotification", "Add a vendor first.");
+            showNotification("reportNotification", "please select a vendor.");
             return;
             }
             txns = getVendorTransactions(vid);

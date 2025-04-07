@@ -41,7 +41,9 @@ b {
   padding: 3px;
   color: #030303;
 }
-
+#editVendorNotification{
+margin: 10px;
+}
 #logout-form {
   display: none;
   position: relative;
