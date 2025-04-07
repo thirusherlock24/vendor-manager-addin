@@ -1,0 +1,9 @@
+{
+    "version": 2,
+    "routes": [
+      {
+        "src": "/api/users.json",
+        "dest": "/public/api/users.json"
+      }
+    ]
+  }

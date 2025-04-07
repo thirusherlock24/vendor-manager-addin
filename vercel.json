@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "src/taskpane.html",
+        "use": "@vercel/static"
+      },
+      {
+        "src": "public/**/*",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/users.json",
+        "dest": "/public/api/users.json"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/src/taskpane.html"
+      }
+    ]
+  }
