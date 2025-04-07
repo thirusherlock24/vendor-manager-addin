@@ -6,7 +6,7 @@ import { Transaction } from "../models/models";
 
 
 
-const USERS = [
+const LOCAL_USERS = [
   {
     username: "admin",
     passwordHash: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"
@@ -28,7 +28,18 @@ function isAuthenticated(): boolean {
 
   return true;
 }
-
+async function fetchUsers(): Promise<typeof LOCAL_USERS> {
+  try {
+    const response = await fetch("https://vendor-manager-addin.vercel.app/api/users.json");
+    if (!response.ok) throw new Error("Network response was not ok");
+    const users = await response.json();
+    console.log("Fetched users:", users);
+    return users;
+  } catch (error) {
+    console.warn("Using local users due to fetch failure:", error);
+    return LOCAL_USERS;
+  }
+}
 function showLoginState(isLoggedIn: boolean) {
   const loginForm = document.getElementById("login-form");
   const logoutForm = document.getElementById("logout-form");
@@ -53,7 +64,8 @@ async function login() {
   const loginNotif = document.getElementById("loginNotification")!;
 
   const hashedPassword = await hashText(passwordInput);
-  const user = USERS.find(u => u.username === usernameInput && u.passwordHash === hashedPassword);
+  const usersData = await fetchUsers();
+  const user = usersData.find(u => u.username === usernameInput && u.passwordHash === hashedPassword);
 
   if (user) {
     const expiry = new Date().getTime() + SESSION_DURATION_MS;
