@@ -12,7 +12,7 @@
     "dev_server_port": 3000
   },
   "scripts": {
-    "build": "your-existing-build && mkdir -p dist/public/api && cp public/api/users.json dist/public/api/users.json",
+    "build": "webpack --mode production && mkdir -p dist/public/api && cp public/api/users.json dist/public/api/users.json",
     "build:dev": "webpack --mode development",
     "dev-server": "webpack serve --mode development",
     "lint": "office-addin-lint check",
