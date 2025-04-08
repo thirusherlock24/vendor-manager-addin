@@ -1,7 +1,9 @@
 {
   "version": 2,
-  "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/api/users.json", "destination": "/public/api/users.json" }
+    {
+      "source": "/api/users.json",
+      "destination": "/api/users.json"
+    }
   ]
 }
