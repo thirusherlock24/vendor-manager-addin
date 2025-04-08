@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "rewrites": [
+  "outputDirectory": "dist",
+  "routes": [
     {
-      "source": "/api/users.json",
-      "destination": "/api/users.json"
+      "src": "/api/users.json",
+      "dest": "public/api/users.json"
     }
   ]
 }
