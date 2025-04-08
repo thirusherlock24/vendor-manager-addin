@@ -4,7 +4,7 @@
   "routes": [
     {
       "src": "/api/users.json",
-      "dest": "public/api/users.json"
+      "dest": "/public/api/users.json"
     }
   ]
 }
