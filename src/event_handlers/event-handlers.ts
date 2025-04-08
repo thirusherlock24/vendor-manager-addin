@@ -26,8 +26,12 @@ export function setupEventHandlers() {
   
     
     document.getElementById("vendorType")?.addEventListener("change", e => {
-      const value = (e.target as HTMLSelectElement).value;
-      document.getElementById("scheduleDetails")!.style.display = value === "on-demand" ? "none" : "block";
+      try {
+        const value = (e.target as HTMLSelectElement).value;
+        document.getElementById("scheduleDetails")!.style.display = value === "on-demand" ? "none" : "block";
+      } catch (err) {
+        console.error("Error handling vendorType change:", err);
+      }
     });
     document.getElementById("addVendorBtn")?.addEventListener("click", () => {
       try {
@@ -102,10 +106,14 @@ export function setupEventHandlers() {
   
     const reportType = document.getElementById("reportType") as HTMLSelectElement;
     reportType.addEventListener("change", () => {
-      const vSelect = document.getElementById("reportVendorSelect")!;
-      const aSelect = document.getElementById("reportAccountSelect")!;
-      vSelect.style.display = reportType.value === "vendor" ? "inline-block" : "none";
-      aSelect.style.display = reportType.value === "account" ? "inline-block" : "none";
+      try {
+        const vSelect = document.getElementById("reportVendorSelect")!;
+        const aSelect = document.getElementById("reportAccountSelect")!;
+        vSelect.style.display = reportType.value === "vendor" ? "inline-block" : "none";
+        aSelect.style.display = reportType.value === "account" ? "inline-block" : "none";
+      } catch (err) {
+        console.error("Error in reportType change handler:", err);
+      }
     });
   
     document.getElementById("generateReportBtn")?.addEventListener("click", () => {

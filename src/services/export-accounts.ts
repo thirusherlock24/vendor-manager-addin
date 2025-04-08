@@ -1,6 +1,7 @@
 import { getAccountDetails } from "../ui/report-service";
 
 export function exportAccountsToExcel() {
+  try{
     Excel.run(async context => {
       const sheet = context.workbook.worksheets.getActiveWorksheet();
       const usedRange = sheet.getUsedRange();
@@ -27,3 +28,7 @@ export function exportAccountsToExcel() {
       await context.sync();
     });
   }
+  catch (err) {
+    console.error("Error exporting accounts to Excel:", err);
+  }
+}

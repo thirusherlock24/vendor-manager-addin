@@ -14,7 +14,7 @@ export function addVendor(
     type,
     scheduleAmount: type === "on-demand" ? undefined : scheduleAmount,
     scheduleAccountId: type === "on-demand" ? undefined : scheduleAccountId,
-    lastPaidDay: undefined, // used for tracking schedule payment
+    lastPaidDay: undefined, 
   };
   vendors.push(newVendor);
   saveVendors(vendors);
@@ -46,6 +46,7 @@ export function editVendor(
   }
 }
 export function exportVendorsToExcel() {
+  try{
   const vendors = getVendors();
   Excel.run(async context => {
     const sheet = context.workbook.worksheets.getActiveWorksheet();
@@ -74,4 +75,8 @@ const data: (string | number)[][] = [header, ...rows, ...footer];
 
     await context.sync();
   });
+}
+  catch (err) {
+    console.error("Error exporting vendors to Excel:", err);
+  }
 }

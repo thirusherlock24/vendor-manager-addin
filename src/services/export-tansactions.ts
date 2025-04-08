@@ -1,5 +1,6 @@
 import { Transaction } from "../models/models";
 export function exportTransactionsToExcel(txns: Transaction[]) {
+  try{
     Excel.run(async context => {
       const sheet = context.workbook.worksheets.getActiveWorksheet();
       const usedRange = sheet.getUsedRange();
@@ -21,3 +22,7 @@ export function exportTransactionsToExcel(txns: Transaction[]) {
       await context.sync();
     });
   }
+  catch (err) {
+    console.error("Error exporting transactions to Excel:", err);
+  }
+}

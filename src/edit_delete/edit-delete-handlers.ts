@@ -14,11 +14,18 @@ export function setupEditDeleteHandlers() {
  
   
   (document.getElementById("editVendorType") as HTMLSelectElement)?.addEventListener("change", e => {
-    const val = (e.target as HTMLSelectElement).value;
+    try
+    {
+      const val = (e.target as HTMLSelectElement).value;
     document.getElementById("editScheduleDetails")!.style.display = val === "on-demand" ? "none" : "block";
+    }
+    catch (err) {
+      console.error("Error handling editVendorType change:", err);
+    }
   });
   
   editBtn.addEventListener("click", () => {
+    try{
     const vendorId = (document.getElementById("vendorList") as HTMLSelectElement).value;
     const vendor = getVendors().find(v => v.id === vendorId);
     if (!vendor) return console.log("Please select a vendor.");
@@ -44,47 +51,64 @@ export function setupEditDeleteHandlers() {
     }
   
     document.getElementById("editVendorForm")!.style.display = "block";
+  }
+    catch (err) {
+      console.error("Error showing editVendorForm:", err);
+    }
   });
   deleteBtn.addEventListener("click", () => {
-    const vendorId = (document.getElementById("vendorList") as HTMLSelectElement).value;
-    if (!vendorId) return console.log("Select a vendor first.");
+    try {
+      const vendorId = (document.getElementById("vendorList") as HTMLSelectElement).value;
+      if (!vendorId) return console.log("Select a vendor first.");
+  
       removeVendor(vendorId);
-      showNotification("editVendorNotification","Removed Vendor successfully!");
-
+      showNotification("editVendorNotification", "Removed Vendor successfully!");
+  
       refreshVendorDropdown();
       populateDropdowns();
       document.getElementById("editVendorForm")!.style.display = "none";
-    
+    } catch (err) {
+      console.error("Error deleting vendor:", err);
+    }
   });
 
   saveBtn.addEventListener("click", () => {
-    const nameInput = document.getElementById("editVendorName") as HTMLInputElement;
-    const typeSelect = document.getElementById("editVendorType") as HTMLSelectElement;
-    const amountInput = document.getElementById("editVendorAmount") as HTMLInputElement;
-    const accountSelect = document.getElementById("editVendorScheduleAccount") as HTMLSelectElement;
-  
-    const id = nameInput.dataset.editingId;
-    const name = nameInput.value.trim();
-    const type = typeSelect.value;
-    const amount = parseFloat(amountInput.value);
-    const accountId = accountSelect.value || "acc1";
-  
-    if (!id || !name) return showNotification("editVendorNotification", "Vendor name required!");
-    if (type !== "on-demand" && (isNaN(amount) || amount <= 0)) {
-      return showNotification("editVendorNotification", "Amount must be greater than zero!");
-    }  if (type === "on-demand") {
-      editVendor(id, name, type as any);
-    } else {
-      editVendor(id, name, type as any, amount, accountId);
+    try {
+      const nameInput = document.getElementById("editVendorName") as HTMLInputElement;
+      const typeSelect = document.getElementById("editVendorType") as HTMLSelectElement;
+      const amountInput = document.getElementById("editVendorAmount") as HTMLInputElement;
+      const accountSelect = document.getElementById("editVendorScheduleAccount") as HTMLSelectElement;
+    
+      const id = nameInput.dataset.editingId;
+      const name = nameInput.value.trim();
+      const type = typeSelect.value;
+      const amount = parseFloat(amountInput.value);
+      const accountId = accountSelect.value || "acc1";
+    
+      if (!id || !name) return showNotification("editVendorNotification", "Vendor name required!");
+      if (type !== "on-demand" && (isNaN(amount) || amount <= 0)) {
+        return showNotification("editVendorNotification", "Amount must be greater than zero!");
+      }  
+      if (type === "on-demand") {
+        editVendor(id, name, type as any);
+      } else {
+        editVendor(id, name, type as any, amount, accountId);
+      }
+    
+      populateDropdowns();
+      refreshVendorDropdown();
+      showNotification("editVendorNotification", "Vendor updated.");
+      document.getElementById("editVendorForm")!.style.display = "none";
+    } catch (err) {
+      console.error("Error saving edited vendor:", err);
     }
-  
-    populateDropdowns();
-    refreshVendorDropdown();
-    showNotification("editVendorNotification", "Vendor updated.");
-    document.getElementById("editVendorForm")!.style.display = "none";
   });
 
   cancelBtn.addEventListener("click", () => {
-    document.getElementById("editVendorForm")!.style.display = "none";
+    try {
+      document.getElementById("editVendorForm")!.style.display = "none";
+    } catch (err) {
+      console.error("Error hiding editVendorForm on cancel:", err);
+    }
   });
 }
