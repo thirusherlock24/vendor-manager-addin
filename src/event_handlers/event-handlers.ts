@@ -7,6 +7,7 @@ import { populateDropdowns } from "../services/populate-dropdowns";
 import { setupEditDeleteHandlers } from "../edit_delete/edit-delete-handlers";
 import { exportTransactionsToExcel } from "../services/export-tansactions";
 import { exportAccountsToExcel } from "../services/export-accounts";
+import { refreshVendorDropdown } from "../services/refresh-vendor-dropdown";
 
 
   
@@ -57,7 +58,7 @@ export function setupEventHandlers() {
       
         populateDropdowns();
         showNotification("addVendorNotification", "Vendor added successfully!");
-      
+        refreshVendorDropdown();
         nameInput.value = "";
         amountInput.value = "";
       

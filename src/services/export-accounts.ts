@@ -11,7 +11,7 @@ export function exportAccountsToExcel() {
   
       const accounts = getAccountDetails(); 
   
-      const header = ["Account ID", "Account Name", "Balance"];
+      const header = ["Account ID", "Account Name", "Balance ($)"];
       const rows = accounts.map(a => [a.id, a.name, a.balance]);
       const footer = [
         ["", "", ""], 

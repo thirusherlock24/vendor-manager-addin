@@ -7,7 +7,7 @@ export function exportTransactionsToExcel(txns: Transaction[]) {
       usedRange.clear();
       const timestamp = new Date().toLocaleString();
 
-      const header = ["Date", "Vendor ID", "Vendor Name", "Amount", "Account ID", "Type"];
+      const header = ["Date", "Vendor ID", "Vendor Name", "Amount ($)", "Account ID", "Type"];
       const rows = txns.map(t => [t.date, t.vendorId, t.vendorName, t.amount, t.accountId, t.type]);
       const footer = [
         ["", "", "", "", "", ""], 

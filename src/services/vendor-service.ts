@@ -54,7 +54,7 @@ export function exportVendorsToExcel() {
     usedRange.clear();
     const timestamp = new Date().toLocaleString();
 
-const header = ["ID", "Name", "Type", "Scheduled Amount", "Scheduled AccountID", "Last PayDay"];
+const header = ["ID", "Name", "Type", "Scheduled Amount ($)", "Scheduled AccountID", "Last PayDay"];
 const rows = vendors.map(v => [
   v.id, 
   v.name, 

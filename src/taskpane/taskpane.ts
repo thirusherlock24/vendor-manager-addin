@@ -30,7 +30,6 @@ function showSection(sectionId: string) {
     const el = document.getElementById(id);
     if (el) el.style.display = id === sectionId ? "block" : "none";
   });
-if (sectionId === "viewSection") refreshVendorDropdown();
 
 
 }
