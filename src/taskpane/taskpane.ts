@@ -11,6 +11,7 @@ window.onload = () => {
     document.getElementById("logoutBtn")?.addEventListener("click", logout);
     initializeAccounts();
     populateDropdowns();
+    refreshVendorDropdown();
     setupEventHandlers();
     showSection("homePage");
   });

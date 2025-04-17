@@ -9,8 +9,6 @@ import { exportTransactionsToExcel } from "../services/export-tansactions";
 import { exportAccountsToExcel } from "../services/export-accounts";
 import { refreshVendorDropdown } from "../services/refresh-vendor-dropdown";
 
-
-  
 export function setupEventHandlers() {
     try {
       Excel.run(async context => {
@@ -22,6 +20,7 @@ export function setupEventHandlers() {
       console.error("Error interacting with Excel:", err);
     }
       
+
   
     setupEditDeleteHandlers();
   
